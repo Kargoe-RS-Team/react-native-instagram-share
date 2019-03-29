@@ -11,7 +11,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.bridge.JavaScriptModule;
 public class RNInstagramSharePackage implements ReactPackage {
-    //@Override
+    @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
       return Arrays.<NativeModule>asList(new RNInstagramShareModule(reactContext));
     }
@@ -21,7 +21,7 @@ public class RNInstagramSharePackage implements ReactPackage {
       return Collections.emptyList();
     }
 
-    //@Override
+    @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
       return Collections.emptyList();
     }
