@@ -30,15 +30,14 @@ public class RNInstagramShareModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void createPost(ReadableMap options, Callback callback) {
+  public void createPostTV(ReadableMap options, Callback callback) {
 
-    if (hasValidKey("url", options) && verificationInstagram()) {
+    if (hasValidKey("url", options) && verification(options.getString("provider"))) {
 
       Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
-
-      shareIntent.setType("image/*");
+      shareIntent.setType(options.getString("type"));
       shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(options.getString("url")));
-      shareIntent.setPackage("com.instagram.android");
+      shareIntent.setPackage(options.getString("provider"));
       shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
       try {
@@ -52,11 +51,11 @@ public class RNInstagramShareModule extends ReactContextBaseJavaModule {
     }
   }
 
-  private boolean verificationInstagram(){
+  private boolean verification(String provider){
     boolean installed = false;
 
     try {
-      ApplicationInfo info = this.getCurrentActivity().getPackageManager().getApplicationInfo("com.instagram.android", 0);
+      ApplicationInfo info = this.getCurrentActivity().getPackageManager().getApplicationInfo(provider, 0);
       installed = true;
     } catch (PackageManager.NameNotFoundException e) {
       installed = false;
